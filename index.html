@@ -14,17 +14,35 @@
     <script type="text/javascript" src="./js/index.js"></script>
 
     <meta name="format-detection" content="telephone=no">
+    <style>
+        #printContainer.panel {
+            position: absolute;
+            top: 150px;
+            bottom: 0;
+            left: 15px;
+            right: 15px;
+            overflow: auto;
+        }
+
+        #printContainer pre {
+            border: 0;
+            color: green;
+            background: transparent;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default" role="navigation" style="background: #222">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Instagram API Test</a>
         </div>
         <div>
-            <p onclick="getInsAccess()" class="navbar-text" style="float: right">Instagram 用户登录</p>
+            <p onclick="getInsAccess()" class="navbar-text" style="float: right;cursor: pointer">Instagram 用户登录</p>
         </div>
     </div>
 </nav>
+<div id="printContainer" class="panel panel-default"><pre><h3 id="controlcode"><h3/></pre></div>
 </body>
 </html>

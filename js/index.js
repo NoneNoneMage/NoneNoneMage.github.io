@@ -17,17 +17,22 @@ function getAccessToken(code,succ){
         'grant_type':'authorization_code',
         'code':code
     }
-    console.log("POST:" + JSON.stringify(data));
+    printEvent('getAccessToken POST', JSON.stringify(data));
     $.post("https://api.instagram.com/oauth/access_token",data,function(result){
         succ(result);
     });
+}
+
+function printEvent(handler, event) {
+    $('#printContainer pre').append(handler + ': ' + JSON.stringify(event, null, 4) + '\n\n');
+    $('#printContainer').scrollTop($('#printContainer')[0].scrollHeight);
 }
 
 $(function() {
     var code = getQueryStringValue("code");
     if(code != undefined && code != ""){
         getAccessToken(code,function (result) {
-            console.log('RESP:' + JSON.stringify(result))
+            printEvent('getAccessToken RESP', JSON.stringify(result))
         })
     }
 });
