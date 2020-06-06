@@ -26,7 +26,6 @@ function getAccessToken(code,succ){
 $(function() {
     var code = getQueryStringValue("code");
     if(code != undefined && code != ""){
-        code = code.substr(0,code.indexOf('#_'));
         getAccessToken(code,function (result) {
             console.log('RESP:' + JSON.stringify(result))
         })
