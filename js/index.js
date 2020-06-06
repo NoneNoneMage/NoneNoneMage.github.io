@@ -17,7 +17,7 @@ function getAccessToken(code,succ){
         'grant_type':'authorization_code',
         'code':code
     }
-    printEvent('getAccessToken POST', JSON.stringify(data));
+    printEvent('getAccessToken POST', data);
     $.post("https://api.instagram.com/oauth/access_token",data,function(result){
         succ(result);
     });
@@ -32,7 +32,7 @@ $(function() {
     var code = getQueryStringValue("code");
     if(code != undefined && code != ""){
         getAccessToken(code,function (result) {
-            printEvent('getAccessToken RESP', JSON.stringify(result))
+            printEvent('getAccessToken RESP', result)
         })
     }
 });
