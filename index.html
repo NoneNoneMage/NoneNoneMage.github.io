@@ -1,1 +1,154 @@
-hello world
+<!DOCTYPE html>
+<head>
+    <title>Zoom WebSDK</title>
+    <meta charset="utf-8" />
+    <link type="text/css" rel="stylesheet" href="https://jssdk.zoomus.cn/1.7.0/css/bootstrap.css"/>
+    <link type="text/css" rel="stylesheet" href="https://jssdk.zoomus.cn/1.7.0/css/react-select.css"/>
+    <link type="text/css" rel="stylesheet" href="./css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="./css/jquery-ui.min.css">
+    
+    <script src="https://jssdk.zoomus.cn/1.7.0/lib/vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-ui.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <meta name="format-detection" content="telephone=no">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
+
+    <script>
+		//Set correct width height on mobile browsers
+		var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+		if(isChrome) {
+			$('head').append('<meta name="viewport" content="width=device-width, initial-scale=0.52, maximum-scale=1" />');
+		} else {
+			$('head').append('<meta name="viewport" content="width=1024" />');
+        }
+    </script>
+    
+</head>
+
+<body>
+<style>
+    body {
+        padding-top: 50px;
+        background-color: black;
+    }
+    .modal-dialog { 
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    left: 0; 
+    right: 0; 
+    } 
+
+    .modal-content { 
+        /*overflow-y: scroll; */ 
+        position: absolute; 
+        top: 0; 
+        bottom: 0; 
+        width: 100%; 
+    } 
+
+    .modal-body { 
+        overflow-y: scroll; 
+        position: absolute; 
+        top: 55px; 
+        bottom: 65px; 
+        width: 100%; 
+    } 
+
+    .modal-header {border-bottom: 1px solid #357ebd !important;}
+
+    .modal-header .close {margin-right: 15px;} 
+
+    .modal-footer {
+        position: absolute; 
+        width: 100%; 
+        bottom: 0; 
+    }
+</style>
+
+<nav id="nav-tool" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">RecordPlay</a>
+        </div>
+        <div id="navbar">
+            <form class="navbar-form navbar-right" id="meeting_form">
+                <div class="form-group">
+                    <input type="text" name="display_name" id="display_name" value="" placeholder="Name" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-primary" id="startRecording">Record</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#recordList">Play</button>
+                <button type="button" class="btn btn-danger" id="stop">Stop</button>
+            </form>
+        </div><!--/.navbar-collapse -->
+    </div>
+</nav>
+
+
+<!-- 视频区域 -->
+<div id="recordPlay" style="height: 100vh; widows: 100vw;" >
+    <video class="rounded centered hide" id="localStream" width="100%" height="100%" autoplay playsinline></video>
+    <video class="rounded centered " id="recordPlayVideo" width="100%" height="100%" autoplay playsinline></video>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="recordList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="margin-top: 10vh;">
+        <div class="modal-content" style="background-color: #222; height: 80vh;color:#357ebd">
+            <div class="modal-header">
+                Records
+            </div>
+            <div class="modal-body" >
+            <ul id="recslist">
+            </ul>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<script src="js/adapter.min.js"></script>
+<script src="js/janus.js"></script>
+<script src="js/record_play_for_web.js"></script>
+
+<script>
+function getQueryStringValue(name) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+ $(function() {
+    var recordPlay = new RecordPlay({
+    });
+    recordPlay.start((succ)=>{
+        var id = getQueryStringValue('recordId');
+        if(id != undefined && id != ""){
+            recordPlay.startPlaying(id);
+        }
+    },(fail)=>{});
+    
+    $('#recordList').on('show.bs.modal', function () {
+        recordPlay.getRecordsList((list)=>{
+            console.log(list)
+            setTimeout(function() {
+                for(var mp in list) {
+				    Janus.debug("  >> [" + list[mp]["id"] + "] " + list[mp]["name"] + " (" + list[mp]["date"] + ")");
+				    $('#recslist').append("<li><a href='record.html?recordId=" + list[mp]["id"] +"' id='" + list[mp]["id"] + "' style='color:#357ebd'>" + list[mp]["name"] + " [" + list[mp]["date"] + "]" + "</a></li>");
+			    }
+		    }, 500);
+        },(errCode,errMsg)=>{
+        })
+    })
+    $('#startRecording').click(function() {
+        recordPlay.startRecording($('#display_name').val());
+    });
+    $('#stop').click(function() {
+        recordPlay.stopRecordOrPlay();
+    });
+});
+</script>
+</body>
+</html>
