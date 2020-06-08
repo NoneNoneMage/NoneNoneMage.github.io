@@ -18,10 +18,17 @@ function getAccessToken(code,succ,error){
         'code':code
     }
     printEvent('getAccessToken POST', data);
-    $.post("https://api.instagram.com/oauth/access_token",data,function(result){
-        succ(result);
-    },function (err) {
-        error(err)
+
+    $.ajax({
+        type: 'POST',
+        url: "https://api.instagram.com/oauth/access_token",
+        data: data,
+        success: (result)=>{
+            succ(result);
+        },
+        error:(err)=>{
+            error(err)
+        }
     });
 }
 
