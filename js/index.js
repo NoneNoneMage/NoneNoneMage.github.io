@@ -41,6 +41,8 @@ $(function() {
     var code = getQueryStringValue("code");
     if(code != undefined && code != ""){
         getAccessToken(code,function (result) {
+            $('#btnAccess').hide();
+            $('#apiList').removeClass('hide').show();
             printEvent('getAccessToken RESP', result);
         },function (err) {
             printEvent('getAccessToken Error:' , err);

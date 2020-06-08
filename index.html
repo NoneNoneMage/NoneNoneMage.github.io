@@ -58,43 +58,18 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="https://nonenonemage.github.io">Instagram API Test</a>
         </div>
-        <div>
+        <div id="btnAccess">
             <p onclick="getInsAccess()" class="navbar-text" style="float: right;cursor: pointer">Instagram 用户授权</p>
+        </div>
+        <div id="apiList" class="dropdown hide" style="float: right;margin-top: 16px">
+            <a data-toggle="dropdown" href="#" style="color: #777">API LIST</a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li><a href="#">获取个人主页信息</a></li>
+                <li><a href="#">获取个人多媒体素材</a></li>
+            </ul>
         </div>
     </div>
 </nav>
-
-<div id="agentbarContainer" class="panel panel-default">
-    <div class="btn-toolbar form-inline">
-        <div class="btn-group">
-            <a class="btn btn-warning" id="btnStartRecord">录屏</a>
-            <a class="btn btn-warning" id="btnStopRecord">结束录屏</a>
-        </div>
-
-        <div class="input-group">
-            <input type="text" class="form-control" id="txtNumber" style="width: 120px;" placeholder="Remote Code" />
-            <div class="input-group-btn">
-                <a class="btn btn-success" id="btnStartControl">远程控制</a>
-                <a class="btn btn-success" id="btnStopControl">结束远程控制</a>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="btn-toolbar form-inline">
-        <div class="btn-group">
-            <a class="btn btn-info" id="btnGetCode">获取控制码</a>
-        </div>
-    </div>
-    <div class="input-group">
-        <input type="text" class="form-control" id="serverUrl" style="width: 200px;" placeholder="Recoder Server Url" />
-        <input type="text" class="form-control" id="agentId" style="width: 200px;" placeholder="agentId" />
-        <div class="input-group-btn">
-            <a class="btn btn-success" id="btnSetConfig">设置</a>
-        </div>
-    </div>
-
-</div>
 
 <div id="printContainer" class="panel panel-default"><pre style="height: 100%"><h3 id="controlcode"><h3/></pre></div>
 </body>
