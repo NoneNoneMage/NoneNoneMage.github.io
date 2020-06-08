@@ -9,7 +9,7 @@ function getQueryStringValue(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function getAccessToken(code,succ){
+function getAccessToken(code,succ,error){
     var data = {
         'client_id':'738993563306475',
         'client_secret':'e843acefa8dd7a4cbfdf6ec243db1105',
@@ -20,6 +20,8 @@ function getAccessToken(code,succ){
     printEvent('getAccessToken POST', data);
     $.post("https://api.instagram.com/oauth/access_token",data,function(result){
         succ(result);
+    },function (err) {
+        error(err)
     });
 }
 
@@ -32,7 +34,9 @@ $(function() {
     var code = getQueryStringValue("code");
     if(code != undefined && code != ""){
         getAccessToken(code,function (result) {
-            printEvent('getAccessToken RESP', result)
+            printEvent('getAccessToken RESP', result);
+        },function (err) {
+            printEvent('getAccessToken Error:' , err);
         })
     }
 });
