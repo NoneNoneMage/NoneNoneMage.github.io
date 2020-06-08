@@ -15,6 +15,26 @@
 
     <meta name="format-detection" content="telephone=no">
     <style>
+        body {
+            padding: 15px;
+            font-size: 12px;
+            font-family: "Microsoft YaHei", "微软雅黑";
+        }
+
+        .btn {
+            font-size: 12px;
+        }
+
+        .form-control {
+            font-size: 12px;
+            height: 31px;
+        }
+
+        #agentbarContainer {
+            padding: 8px;
+            background: #f5f7f8;
+        }
+
         #printContainer.panel {
             position: absolute;
             top: 73px;
@@ -39,10 +59,43 @@
             <a class="navbar-brand" href="https://nonenonemage.github.io">Instagram API Test</a>
         </div>
         <div>
-            <p onclick="getInsAccess()" class="navbar-text" style="float: right;cursor: pointer">Instagram 用户登录</p>
+            <p onclick="getInsAccess()" class="navbar-text" style="float: right;cursor: pointer">Instagram 用户授权</p>
         </div>
     </div>
 </nav>
+
+<div id="agentbarContainer" class="panel panel-default">
+    <div class="btn-toolbar form-inline">
+        <div class="btn-group">
+            <a class="btn btn-warning" id="btnStartRecord">录屏</a>
+            <a class="btn btn-warning" id="btnStopRecord">结束录屏</a>
+        </div>
+
+        <div class="input-group">
+            <input type="text" class="form-control" id="txtNumber" style="width: 120px;" placeholder="Remote Code" />
+            <div class="input-group-btn">
+                <a class="btn btn-success" id="btnStartControl">远程控制</a>
+                <a class="btn btn-success" id="btnStopControl">结束远程控制</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="btn-toolbar form-inline">
+        <div class="btn-group">
+            <a class="btn btn-info" id="btnGetCode">获取控制码</a>
+        </div>
+    </div>
+    <div class="input-group">
+        <input type="text" class="form-control" id="serverUrl" style="width: 200px;" placeholder="Recoder Server Url" />
+        <input type="text" class="form-control" id="agentId" style="width: 200px;" placeholder="agentId" />
+        <div class="input-group-btn">
+            <a class="btn btn-success" id="btnSetConfig">设置</a>
+        </div>
+    </div>
+
+</div>
+
 <div id="printContainer" class="panel panel-default"><pre style="height: 100%"><h3 id="controlcode"><h3/></pre></div>
 </body>
 </html>
